@@ -20,14 +20,6 @@ def home():
     return render_template("main/home.html", uploadform=uploadform)
 
 
-@main_blueprint.route("/about/")
-def about():
-    """
-    Render the about page
-    """
-    return render_template("main/about.html")
-
-
 @main_blueprint.route('/upload', methods=['POST'])
 def upload():
     """
