@@ -36,13 +36,7 @@ Test with coverage:
 $ docker-compose run web python manage.py cov
 ```
 
-Lint:
-
-```sh
-$ docker-compose run web flake8 project
-```
-
-## Run the app
+### Run the app
 
 ```sh
 $ docker-compose run web
@@ -103,14 +97,3 @@ With coverage:
 $ python manage.py cov
 ```
 
-Run flake8 on the app:
-
-```sh
-$ python manage.py flake
-```
-
-or
-
-```sh
-$ flake8 project
-```

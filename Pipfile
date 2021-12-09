@@ -15,7 +15,6 @@ flask-bootstrap = "*"
 
 coverage = "*"
 flask-testing = "*"
-"flake8" = "*"
 flask-wtf = "*"
 
 

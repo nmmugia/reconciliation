@@ -2,8 +2,8 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import FileField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
+
 
 class UploadForm(FlaskForm):
     file1 = FileField('inputFile1',

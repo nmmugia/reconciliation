@@ -1,5 +1,4 @@
 coverage>=4.5.4
-flake8==3.7.9
 Flask==1.1.1
 Flask-Bootstrap==3.3.7.1
 Flask-Testing==0.7.1

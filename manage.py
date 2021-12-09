@@ -54,10 +54,5 @@ def cov():
         sys.exit(1)
 
 
-@cli.command()
-def flake():
-    """Runs flake8 on the project."""
-    subprocess.run(["flake8", "project"])
-
 if __name__ == "__main__":
     cli()
