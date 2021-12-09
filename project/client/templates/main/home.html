@@ -1,0 +1,137 @@
+{% extends "_base.html" %}
+{% block content %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+  <div class="border round p-5">
+    <div class="form-group">
+      <h3>Specify files to compare!</h3>
+    </div>
+    <form class="form" role="form" method="post" action="{{ url_for('main.upload') }}" enctype="multipart/form-data">
+      
+      {{ uploadform.csrf_token }}
+      {{ uploadform.hidden_tag() }}
+      {{ wtf.form_errors(uploadform, hiddens="only") }}
+
+      <div class="form-group">
+        <label for="inputFile1" class="col-sm-2 control-label">Select file 1</label>
+        {{ uploadform.file1(class_="form-control") }}
+      </div>
+
+      <div class="form-group">
+        <label for="inputFile2" class="col-sm-2 control-label">Select file 2</label>
+        {{ uploadform.file2(class_="form-control") }}
+      </div>
+
+      <button type="submit" class="btn btn-default">Compare</button>
+    </form>
+  </div>
+  
+  {% if dict_report is defined %}
+  <div class="row m-5 border round p-5">
+    <div class="row col-md-12">
+      <h3>Comparison result</h3>
+      <hr><br>
+    </div>
+    <div class="row col-md-12">
+      <div class="row col-md-12 m-2">
+        <div class="col-md-6">
+          <table class="table-comparison" >
+            <tr>
+              <th>{{ dict_report.data[0].filename }}</th>
+            </tr>
+            <tr>
+              <td>Total Records:</td><td>{{ dict_report.data[0].total_data }}</td>
+            </tr>
+            <tr>
+              <td>Matching Records:</td><td>{{ dict_report.data[0].dict_report.matching_records }}</td>
+            </tr>
+            <tr>
+              <td>Unmatched Records:</td><td>{{ dict_report.data[0].dict_report.unmatched_records }}</td>
+            </tr>
+        </table>   
+        </div>
+        <div class="col-md-6">
+          <table class="table-comparison" >
+            <tr>
+              <th>{{ dict_report.data[1].filename }}</th>
+            </tr>
+            <tr>
+              <td>Total Records:</td><td>{{ dict_report.data[1].total_data }} {% if dict_report.data[1].duplicate_data > 0 %}(Duplicate: {{dict_report.data[1].duplicate_data}}){% endif %}</td>
+            </tr>
+            <tr>
+              <td>Matching Records:</td><td>{{ dict_report.data[1].dict_report.matching_records }}</td>
+            </tr>
+            <tr>
+              <td>Unmatched Records:</td><td>{{ dict_report.data[1].dict_report.unmatched_records }}</td>
+            </tr>
+        </table>   
+        </div>
+      </div>
+      <div class="row col-md-12 m-2">
+        <button class="btn btn-default" id="unmatchedReportBTN">Unmatched Report</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row d-none m-5 border round p-5" id="unmatchedReport">
+    <div class="row col-md-12">
+    <div class="col-md-6">
+      <h3>Unmatched report</h3>
+    </div>
+    </div>
+    <div class="row col-md-12">
+    <div class="col-md-6">
+      <table class="table table-responsive">
+        {% for header_item in dict_report.data[0].header %}
+          <th>{{ header_item }}</th>
+        {% endfor %}
+      </tr>
+      {% for value in dict_report.data[0].dict_report.unmatched_data %}
+        {%if dict_report.data[0].dict_report.unmatched_data[value]["points"] > 0 %}
+              <tr class="bg-success">
+            {% else %}
+              <tr>
+            {% endif %}
+            {% for value_key in dict_report.data[0].header %}
+                {% if value_key != 'total_exist' %}
+                  <td>{{ dict_report.data[0].dict_report.unmatched_data[value][value_key] }}</td>
+                {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+    </div>
+
+    <div class="col-md-6">
+      <table class="table  table-responsive">
+        {% for header_item in dict_report.data[1].header %}
+          <th>{{ header_item }}</th>
+        {% endfor %}
+      </tr>
+      {% for value in dict_report.data[1].dict_report.unmatched_data %}
+        {%if dict_report.data[1].dict_report.unmatched_data[value]["points"] > 0 %}
+          <tr class="bg-success">
+        {% else %}
+          <tr>
+        {% endif %}
+            {% for value_key in dict_report.data[1].header %}
+                {% if value_key != 'total_exist' %}
+                  <td>{{ dict_report.data[1].dict_report.unmatched_data[value][value_key] }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+    </div>
+    <div class="row col-md-12">
+      <span>*the table is draggable horizontally if the column is overflow</span>
+      <span>*<svg width="20" height="20">
+        <rect width="20" height="20" style="fill:#28a745;stroke-width:3;stroke:rgb(0,0,0)" />
+        </svg> means that there is a possible match, but the data is not perferctly matched</span>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
