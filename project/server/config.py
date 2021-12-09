@@ -9,7 +9,7 @@ class BaseConfig(object):
     """Base configuration."""
 
     APP_NAME = os.getenv("APP_NAME", "reconciliation")
-    SECRET_KEY = os.getenv("SECRET_KEY", "my_precious")
+    SECRET_KEY = os.getenv("SECRET_KEY", "secret")
     WTF_CSRF_ENABLED = False
 
 

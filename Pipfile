@@ -16,6 +16,7 @@ flask-bootstrap = "*"
 coverage = "*"
 flask-testing = "*"
 flask-wtf = "*"
+python-dotenv = "*"
 
 
 [requires]

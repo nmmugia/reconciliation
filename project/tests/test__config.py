@@ -43,7 +43,7 @@ class TestProductionConfig(TestCase):
 
     def test_secret_key_has_been_set(self):
         self.assertTrue(
-            app.secret_key == os.getenv("SECRET_KEY", default="my_precious")
+            app.secret_key == os.getenv("SECRET_KEY", default="secret")
         )
 
 if __name__ == "__main__":
